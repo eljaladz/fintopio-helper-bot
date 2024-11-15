@@ -19,6 +19,7 @@ async function handleAutomate(BEARERS) {
   await runFarm(BEARERS);
   await runMine(BEARERS);
   await runTasks(BEARERS);
+  await runGame(BEARERS);
   console.log("Completed ✓\n".green);
 
   cron.schedule("0 0-23 * * *", async () => {
