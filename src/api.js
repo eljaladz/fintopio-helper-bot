@@ -47,10 +47,7 @@ async function startTask(token, id) {
 
     return data;
   } catch (error) {
-    if (
-      error.response.data.message.includes("update task") ||
-      error.response.data.message.includes("not found")
-    ) {
+    if ( error.response.data.message.includes("update task") || error.response.data.message.includes("not found") ) {
       console.log(
         `✗ Task with ID "${id}" failed to start, please do it manually!`.red
       );
