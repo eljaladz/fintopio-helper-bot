@@ -59,6 +59,11 @@ Enter 1, 2, 3, 4, or 5: `);
   }
 }
 
+async function randomDelay(min, max) {
+  const delayTime = Math.floor(Math.random() * (max - min + 1)) + min;
+  return new Promise(resolve => setTimeout(resolve, delayTime));
+}
+
 async function runCheckin(BEARERS) {
   for (const [index, BEARER] of BEARERS.entries()) {
     console.log(`Account ${index + 1}:`);
@@ -78,6 +83,8 @@ async function runCheckin(BEARERS) {
     console.log(`Balance after check-in: ${checkinData.balance}`.green);
     console.log("");
   }
+
+  await randomDelay(1000, 10000);
 }
 
 async function runFarm(BEARERS) {
@@ -108,6 +115,8 @@ async function runFarm(BEARERS) {
       console.log(`✗ Failed to start new farming session.`.red);
       console.log("");
     }
+
+    await randomDelay(1000, 10000);
   }
 }
 
@@ -128,8 +137,6 @@ async function runMine(BEARERS) {
       } else {
         console.log(`Cracking...`.yellow);
 
-        await delay(2500);
-
         await claimDiamond(BEARER, getDiamond.diamondNumber);
 
         console.log(
@@ -142,7 +149,8 @@ async function runMine(BEARERS) {
       console.log(`Error cracking diamond`.red);
       console.log("");
     }
-    await delay(500);
+
+    await randomDelay(1000, 10000);
   }
 }
 
@@ -248,4 +256,5 @@ module.exports = {
   runGame,
   runFarm,
   runCheckin,
+  randomDelay,
 };
