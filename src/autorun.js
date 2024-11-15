@@ -1,8 +1,6 @@
 const cron = require("node-cron");
 const { fetchReferralData } = require("./api");
-const { runCheckin, runFarm, runMine, runTasks, runGame } = require("./tasks");
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const moment = require("moment");
+const { runCheckin, runFarm, runMine, runTasks, runGame, randomDelay } = require("./tasks");
 const { createTable } = require("./display");
 
 async function handleAutomate(BEARERS) {
@@ -74,7 +72,8 @@ async function handleAutomate(BEARERS) {
         }
 
         await runGame(BEARERS);
-
+        await randomDelay(5000, 15000);
+        
         if (isSessionActive) {
           runGameSession();
         } else {
