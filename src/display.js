@@ -3,14 +3,15 @@ const Table = require('cli-table3');
 
 function displayHeader() {
   process.stdout.write('\x1Bc');
-  console.log('========================================'.cyan);
-  console.log('=         Fintopio Helper Bot          ='.cyan);
-  console.log('=     Created by HappyCuanAirdrop      ='.cyan);
-  console.log('=    https://t.me/HappyCuanAirdrop     ='.cyan);
-  console.log('========================================'.cyan);
-  console.log('       ☂  Modified by NoDrops ☂       '.yellow);
-  console.log('         https://t.me/NoDrops          '.yellow);
-  console.log();
+  const art = `
+       _  __        ___                        
+      / |/ / ___   / _ \\  ____ ___    ___   ___
+     /    / / _ \\ / // / / __// _ \\  / _ \\ (_-<
+    /_/|_/  \\___//____/ /_/   \\___/ / .__//___/
+                                   /_/         
+    `.blue;
+  console.log(art);
+  console.log("              ☂ https://t.me/NoDrops ☂          \n".cyan);
 }
 
 async function createTable(BEARERS, fetchReferralData) {
