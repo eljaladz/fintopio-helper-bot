@@ -203,10 +203,10 @@ async function claimDiamondBreathReward(token, seconds) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      data: { seconds }, // Mengirimkan seconds dalam payload
+      data: { seconds },
     });
 
-    return data; // Mengembalikan hasil klaim dari server
+    return data;
   } catch (error) {
     console.error(`✗ Error claiming reward: ${error.response?.data?.message || error.message}`.red);
     return null;
