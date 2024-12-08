@@ -1,6 +1,6 @@
 const cron = require("node-cron");
 const { fetchReferralData } = require("./api");
-const { runCheckin, runFarm, runMine, runTasks, runGame, randomDelay } = require("./tasks");
+const { runCheckin, runFarm, runMine, runTasks, runGame, runDiamondBreathGame, randomDelay } = require("./tasks");
 const { createTable } = require("./display");
 
 async function handleAutomate(BEARERS) {
@@ -20,6 +20,7 @@ async function handleAutomate(BEARERS) {
   await runMine(BEARERS);
   await runTasks(BEARERS);
   await runGame(BEARERS);
+  await runDiamondBreathGame(BEARERS);
   console.log("Completed ✓\n".green);
 
   cron.schedule("0 0-23 * * *", async () => {
@@ -43,6 +44,8 @@ async function handleAutomate(BEARERS) {
   cron.schedule("3 7,15,23 * * *", async () => {
     console.log(`Farming...`.cyan);
     runFarm(BEARERS);
+    await randomDelay(1000);
+    runDiamondBreathGame(BEARERS);
     console.log("");
   });
 
@@ -74,7 +77,7 @@ async function handleAutomate(BEARERS) {
 
         await runGame(BEARERS);
         await randomDelay(5000, 15000);
-        
+                
         if (isSessionActive) {
           runGameSession();
         } else {

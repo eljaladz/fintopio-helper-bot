@@ -177,6 +177,43 @@ async function claimDiamond(token, id) {
   }
 }
 
+async function getDiamondBreathInfo(token) {
+  try {
+    const { data } = await axios.get("https://fintopio-tg.fintopio.com/api/games/diamond-breath", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { isAvailableGame, rewardPerSecond } = data;
+    return { isAvailableGame, rewardPerSecond: parseInt(rewardPerSecond, 10) };
+  } catch (error) {
+    console.error(
+      `✗ Error fetching Diamond Breath info: ${error.response?.data?.message || error.message}`.red
+    );
+    return null;
+  }
+}
+
+async function claimDiamondBreathReward(token, seconds) {
+  try {
+    const { data } = await axios({
+      url: 'https://fintopio-tg.fintopio.com/api/games/diamond-breath',
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { seconds }, // Mengirimkan seconds dalam payload
+    });
+
+    return data; // Mengembalikan hasil klaim dari server
+  } catch (error) {
+    console.error(`✗ Error claiming reward: ${error.response?.data?.message || error.message}`.red);
+    return null;
+  }
+}
+
+
 async function getGameInfo(token) {
   try {
     const { data } = await axios({
@@ -224,4 +261,6 @@ module.exports = {
   claimDiamond,
   getGameInfo,
   claimGameReward,
+  getDiamondBreathInfo,
+  claimDiamondBreathReward
 };

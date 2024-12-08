@@ -11,6 +11,8 @@ const {
   claimDiamond,
   getGameInfo,
   claimGameReward,
+  getDiamondBreathInfo,
+  claimDiamondBreathReward,
 } = require("./api");
 const { displayHeader, createTable } = require("./display");
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -30,12 +32,13 @@ Choose an option:
 2. 🪐 Auto click asteroid
 3. 📅 Auto daily check-in
 4. 🌱 Auto farming
-5. 🎮 Auto play game
-6. ❌ Exit
+5. 🎮 Auto play Space Tapper
+6. 💎 Auto play Diamond Breath
+7. ❌ Exit
 
-Enter 1, 2, 3, 4, or 5: `);
+Enter 1-7: `);
 
-    if (options === "6") {
+    if (options === "7") {
       console.log("👋 Exiting the bot. See you next time!".cyan);
       console.log("Subscribe: https://t.me/HappyCuanAirdrop.".green);
       process.exit(0);
@@ -51,6 +54,8 @@ Enter 1, 2, 3, 4, or 5: `);
       await runFarm(BEARERS);
     } else if (options === "5") {
       await runGame(BEARERS);
+    } else if (options === "6") {
+      await runDiamondBreathGame(BEARERS);
     } else {
       console.log("Invalid option!".red);
     }
@@ -205,8 +210,11 @@ async function runGame(BEARERS) {
       const maxScore = 648;
 
       if (!gameInfo) {
-        console.log(`Account ${index + 1}:`);
-        console.log(`✗ Unable to fetch game info, please try again later`.red);
+        console.log(
+          `Account ${
+            index + 1
+          }: ✗ Unable to fetch game info, please try again later`.red
+        );
         console.log("");
         return;
       }
@@ -215,10 +223,10 @@ async function runGame(BEARERS) {
         Math.floor(Math.random() * (maxScore - minScore + 1)) + minScore;
       const delayTime = score * (0.5 + Math.random() * 0.5);
 
-      console.log(`Account ${index + 1}:`);
       const actualScore = score * gameInfo.rate;
-      console.log(`Playing with score: ${actualScore}`);
-      console.log(`Please wait, calculating delay based on score...`.yellow);
+      console.log(
+        `Account ${index + 1}: Playing for ${actualScore} scores...`.yellow
+      );
 
       await delay(delayTime * 1000);
 
@@ -249,11 +257,54 @@ async function runGame(BEARERS) {
   await Promise.all(gamePromises);
 }
 
+async function runDiamondBreathGame(BEARERS) {
+  const gamePromises = BEARERS.map(async (BEARER, index) => {
+    try {
+      const { isAvailableGame, rewardPerSecond } = await getDiamondBreathInfo(
+        BEARER
+      );
+
+      if (!isAvailableGame) {
+        console.log(
+          ` Account ${index + 1}: ✗ Game is not available, try again later`.red
+        );
+        return;
+      }
+
+      const seconds = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
+
+      console.log(
+        `Account ${
+          index + 1
+        }: Playing for ${seconds} seconds... . (Reward Per Second: ${rewardPerSecond})`
+          .cyan
+      );
+      await delay(seconds * 1000);
+      const claimResult = await claimDiamondBreathReward(BEARER, seconds);
+
+      if (claimResult.reward) {
+        console.log(
+          `✓ Account ${index + 1}: Successfully claimed ${
+            claimResult.reward
+          } $HP!`.green
+        );
+      } else {
+        console.log(`✗ Account ${index + 1}: Failed to claim reward`.red);
+      }
+    } catch (error) {
+      console.log(`✗ Account ${index + 1}: Error occurred during game`.red);
+    }
+  });
+
+  await Promise.all(gamePromises);
+}
+
 module.exports = {
   handleTasks,
   runMine,
   runTasks,
   runGame,
+  runDiamondBreathGame,
   runFarm,
   runCheckin,
   randomDelay,
