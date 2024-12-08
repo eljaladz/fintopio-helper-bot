@@ -289,10 +289,11 @@ async function runDiamondBreathGame(BEARERS) {
 
       if (claimResult.reward) {
         console.log(
-          `✓ Account ${index + 1}: Successfully claimed ${
+          `Account ${index + 1}: ✓ Successfully claimed ${
             claimResult.reward
           } $HP!`.green
         );
+        console.log("");
       } else {
         console.log(`✗ Account ${index + 1}: Failed to claim reward`.red);
       }
