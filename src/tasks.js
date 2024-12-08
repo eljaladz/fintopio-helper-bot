@@ -270,6 +270,7 @@ async function runDiamondBreathGame(BEARERS) {
         console.log(
           ` Account ${index + 1}: ✗ Game is not available, try again later`.red
         );
+        console.log("");
         return;
       }
 
@@ -281,6 +282,8 @@ async function runDiamondBreathGame(BEARERS) {
         }: Playing for ${seconds} seconds... . (Reward Per Second: ${rewardPerSecond})`
           .cyan
       );
+      console.log("");
+
       await delay(seconds * 1000);
       const claimResult = await claimDiamondBreathReward(BEARER, seconds);
 
