@@ -5,10 +5,10 @@ Automation to complete tasks, daily check in, farming and play games on the Fint
 ## Features
 
 - ✅ Auto Complete All Tasks
-- 💎 Auto Click Asteroid (diamond)
+- 💎 Auto Play Clicker Game
 - 📅 Auto Daily Check-in
 - 🌱 Auto Farming
-- 🎮 Auto Play Game
+- 🎮 Auto Play Hold Games
 - 🌐 Multiple Accounts
 - 🔄 Autorun (Scheduled 🌙)
 
@@ -21,6 +21,10 @@ Automation to complete tasks, daily check in, farming and play games on the Fint
    cd fintopio-helper-bot
    mv bearers.json.example bearers.json
    ```
+   > If you want to update the bot to the latest version, just use the command:
+   > ```bash
+   > git pull https://github.com/eljaladz/fintopio-helper-bot.git
+   > ```
 
 2. Install dependencies:
 
