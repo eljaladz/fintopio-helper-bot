@@ -40,6 +40,7 @@ Enter 1-7: `);
 
     if (options === "7") {
       console.log("👋 Exiting the bot. See you next time!".cyan);
+      console.log("Subscribe: https://t.me/NoDrops.".green);
       console.log("Subscribe: https://t.me/HappyCuanAirdrop.".green);
       process.exit(0);
     }
@@ -227,6 +228,7 @@ async function runGame(BEARERS) {
       console.log(
         `Account ${index + 1}: Playing for ${actualScore} scores...`.yellow
       );
+      console.log("");
 
       await delay(delayTime * 1000);
 
